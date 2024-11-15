@@ -24,20 +24,12 @@ public partial class MainWindow : MxWindow
         serializationId = Guid.NewGuid().ToString();
         
         dock.AddHandler(SerializationManager.StartDeserializingEvent, OnStartDeserializing);
-        dock.AddHandler(SerializationManager.EndDeserializingEvent, OnEndDeserializing);
-    }
-
-    private void OnEndDeserializing(object? sender, RoutedEventArgs e)
-    {
-        dock.GetItems().Where(x => x.Tag != serializationId).ForEach(x => dock.Remove(x));
     }
 
     private void OnStartDeserializing(object? sender, RoutedEventArgs e)
     {
         dock.GetItems().ForEach(x => x.Tag = serializationId);
     }
-    
-    
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
@@ -51,6 +43,9 @@ public partial class MainWindow : MxWindow
         var fs = File.OpenRead("test.xml");
         dock.RestoreLayout(fs);
         fs.Close();
+        
+        dock.GetItems().OfType<DocumentPane>().Where(x => x.Tag != serializationId).ForEach(x => dock.Remove(x));
+        dock.OptimizeLayout();
     }
 
     private void Button_OnClick2(object? sender, RoutedEventArgs e)
