@@ -1,0 +1,32 @@
+<mx:MxWindow xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mx="https://schemas.eremexcontrols.net/avalonia"
+             xmlns:mxd="https://schemas.eremexcontrols.net/avalonia/docking"
+             xmlns:eremexAvaloniaApplication1="clr-namespace:EremexAvaloniaApplication1"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EremexAvaloniaApplication1.MainWindow"
+             Icon="/Assets/EMXControls.ico"
+             Title="EremexAvaloniaApplication1"
+             x:DataType="eremexAvaloniaApplication1:ViewModel">
+    <Grid RowDefinitions="Auto *">
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Save" Click="Button_OnClick"></Button>
+            <Button Content="Load" Click="Button_OnClick1"></Button>
+            <Button Content="Add document" Click="Button_OnClick2"></Button>
+        </StackPanel>
+        <mxd:DockManager x:Name="dock" Grid.Row="1" ItemsSource="{Binding Panes}" mxd:DockManagerSerializer.RestoreBehavior="KeepOldItems">
+            <mxd:DockManager.ItemTemplate>
+                <DataTemplate x:DataType="eremexAvaloniaApplication1:PaneViewModel">
+                    <mxd:DocumentPane Header="{Binding Header}"></mxd:DocumentPane>
+                </DataTemplate>
+            </mxd:DockManager.ItemTemplate>
+            <mxd:DockGroup x:Name="root">
+                <mxd:DockPane Header="Pane1" x:Name="pane1"></mxd:DockPane>
+                <mxd:DocumentGroup DockWidth="2*" x:Name="DocumentGroup"></mxd:DocumentGroup>
+                <mxd:DockPane Header="Pane2" x:Name="pane2"></mxd:DockPane>
+            </mxd:DockGroup>
+        </mxd:DockManager>
+    </Grid>
+</mx:MxWindow>
